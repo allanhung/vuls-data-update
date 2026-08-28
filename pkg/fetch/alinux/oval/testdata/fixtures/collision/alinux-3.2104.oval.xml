@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<oval_definitions xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5" xmlns:oval="http://oval.mitre.org/XMLSchema/oval-common-5">
+  <generator>
+    <oval:product_name>Alibaba Cloud Linux OVAL Generator</oval:product_name>
+    <oval:product_version>0.1</oval:product_version>
+    <oval:schema_version>5.11.2</oval:schema_version>
+    <oval:timestamp>2026-08-28T01:18:41</oval:timestamp>
+  </generator>
+  <definitions>
+    <definition class="patch" id="oval:com.aliyun:def:20260001" version="1">
+      <metadata>
+        <title>ALINUX3-HOTFIX-SA-2026:0001: kernel-hotfix security update (Important)</title>
+        <affected family="unix">
+          <platform>Alibaba Cloud Linux 3</platform>
+        </affected>
+        <reference ref_id="ALINUX3-HOTFIX-SA-2026:0001" ref_url="https://alas.aliyun-inc.com/errata/detail/ALINUX3-HOTFIX-SA-2026:0001" source="ALINUX3-HOTFIX-SA"/>
+        <description>kernel-hotfix</description>
+        <advisory from="alas.aliyun-inc.com">
+          <severity>Important</severity>
+          <issued date="2026-05-13"/>
+          <updated date="2026-05-13"/>
+          <cve href="https://alas.aliyun-inc.com/cves/detail/CVE-2026-43284" public="20260511">CVE-2026-43284</cve>
+        </advisory>
+      </metadata>
+      <criteria operator="AND">
+        <criterion comment="Alibaba Cloud Linux 3.2104 is installed" test_ref="oval:com.aliyun:tst:1"/>
+        <criteria operator="OR">
+          <criterion comment="kernel-hotfix-27289074-5.10.134-12 is earlier than 0:hotfix-27289074-5.10.134-12-1.0-20260510120832.al8" test_ref="oval:com.aliyun:tst:20260001001"/>
+        </criteria>
+      </criteria>
+    </definition>
+    <definition class="patch" id="oval:com.aliyun:def:20260001" version="1">
+      <metadata>
+        <title>ALINUX3-SA-2026:0001: git-lfs security update (Important)</title>
+        <affected family="unix">
+          <platform>Alibaba Cloud Linux 3</platform>
+        </affected>
+        <reference ref_id="ALINUX3-SA-2026:0001" ref_url="https://alas.aliyun-inc.com/errata/detail/ALINUX3-SA-2026:0001" source="ALINUX3-SA"/>
+        <description>git-lfs</description>
+        <advisory from="alas.aliyun-inc.com">
+          <severity>Important</severity>
+          <issued date="2026-05-13"/>
+          <updated date="2026-05-13"/>
+          <cve href="https://alas.aliyun-inc.com/cves/detail/CVE-2026-99999" public="20260511">CVE-2026-99999</cve>
+        </advisory>
+      </metadata>
+      <criteria operator="AND">
+        <criterion comment="Alibaba Cloud Linux 3.2104 is installed" test_ref="oval:com.aliyun:tst:1"/>
+        <criteria operator="OR">
+          <criterion comment="git-lfs is earlier than 0:3.6.1-1.al8" test_ref="oval:com.aliyun:tst:20260001001"/>
+        </criteria>
+      </criteria>
+    </definition>
+    <definition class="patch" id="oval:com.aliyun:def:20250143" version="1">
+      <metadata>
+        <title>ALINUX3-SA-2025:0143: haproxy security update (Moderate)</title>
+        <affected family="unix">
+          <platform>Alibaba Cloud Linux 3</platform>
+        </affected>
+        <reference ref_id="ALINUX3-SA-2025:0143" ref_url="https://alas.aliyun-inc.com/errata/detail/ALINUX3-SA-2025:0143" source="ALINUX3-SA"/>
+        <description>haproxy</description>
+        <advisory from="alas.aliyun-inc.com">
+          <severity>Moderate</severity>
+          <issued date="2025-11-12"/>
+          <updated date="2025-11-12"/>
+          <cve href="https://alas.aliyun-inc.com/cves/detail/CVE-2025-32464" public="20251112">CVE-2025-32464</cve>
+        </advisory>
+      </metadata>
+      <criteria operator="AND">
+        <criterion comment="Alibaba Cloud Linux 3.2104 is installed" test_ref="oval:com.aliyun:tst:1"/>
+        <criteria operator="OR">
+          <criterion comment="haproxy is earlier than 0:3.0.5-2.al8" test_ref="oval:com.aliyun:tst:20250143001"/>
+        </criteria>
+      </criteria>
+    </definition>
+  </definitions>
+  <tests>
+    <textfilecontent54_test xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#independent" check="at least one" version="1" comment="Alibaba Cloud Linux 3.2104 is installed" id="oval:com.aliyun:tst:1">
+      <object object_ref="oval:com.aliyun:obj:1"/>
+      <state state_ref="oval:com.aliyun:ste:1"/>
+    </textfilecontent54_test>
+    <rpminfo_test xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#linux" check="all" comment="kernel-hotfix-27289074-5.10.134-12 is earlier than 0:hotfix-27289074-5.10.134-12-1.0-20260510120832.al8" version="1" id="oval:com.aliyun:tst:20260001001">
+      <object object_ref="oval:com.aliyun:obj:20260001001"/>
+      <state state_ref="oval:com.aliyun:ste:20260001001"/>
+    </rpminfo_test>
+    <rpminfo_test xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#linux" check="all" comment="git-lfs is earlier than 0:3.6.1-1.al8" version="1" id="oval:com.aliyun:tst:20260001001">
+      <object object_ref="oval:com.aliyun:obj:20260001001"/>
+      <state state_ref="oval:com.aliyun:ste:20260001001"/>
+    </rpminfo_test>
+    <rpminfo_test xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#linux" check="all" comment="haproxy is earlier than 0:3.0.5-2.al8" version="1" id="oval:com.aliyun:tst:20250143001">
+      <object object_ref="oval:com.aliyun:obj:20250143001"/>
+      <state state_ref="oval:com.aliyun:ste:20250143001"/>
+    </rpminfo_test>
+  </tests>
+  <objects>
+    <textfilecontent54_object xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#independent" id="oval:com.aliyun:obj:1" version="1">
+      <path>/etc</path>
+      <filename>alinux-release</filename>
+      <pattern operation="pattern match">(Alibaba Cloud Linux release) \d.*</pattern>
+      <instance datatype="int">1</instance>
+    </textfilecontent54_object>
+    <rpminfo_object xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#linux" id="oval:com.aliyun:obj:20260001001" version="1">
+      <name>kernel-hotfix-27289074-5.10.134-12</name>
+    </rpminfo_object>
+    <rpminfo_object xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#linux" id="oval:com.aliyun:obj:20260001001" version="1">
+      <name>git-lfs</name>
+    </rpminfo_object>
+    <rpminfo_object xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#linux" id="oval:com.aliyun:obj:20250143001" version="1">
+      <name>haproxy</name>
+    </rpminfo_object>
+  </objects>
+  <states>
+    <textfilecontent54_state xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#independent" id="oval:com.aliyun:ste:1" version="1">
+      <text operation="pattern match">3</text>
+    </textfilecontent54_state>
+    <rpminfo_state xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#linux" id="oval:com.aliyun:ste:20260001001" version="1">
+      <evr datatype="evr_string" operation="less than">0:hotfix-27289074-5.10.134-12-1.0-20260510120832.al8</evr>
+    </rpminfo_state>
+    <rpminfo_state xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#linux" id="oval:com.aliyun:ste:20260001001" version="1">
+      <evr datatype="evr_string" operation="less than">0:3.6.1-1.al8</evr>
+    </rpminfo_state>
+    <rpminfo_state xmlns="http://oval.mitre.org/XMLSchema/oval-definitions-5#linux" id="oval:com.aliyun:ste:20250143001" version="1">
+      <evr datatype="evr_string" operation="less than">0:3.0.5-2.al8</evr>
+    </rpminfo_state>
+  </states>
+</oval_definitions>

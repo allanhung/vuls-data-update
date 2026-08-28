@@ -145,6 +145,57 @@ func TestFetch(t *testing.T) {
 	}
 }
 
+// TestFetch_collisionQuarantine pins the B2 fix: when upstream reuses one
+// oval:com.aliyun:def id for two different advisories (a *-HOTFIX-SA and an
+// ALINUX<n>-SA) whose same-id rpminfo tests carry different content, the fetcher
+// writes NEITHER colliding definition and NEITHER poisoned tst/obj/ste file,
+// while a non-colliding sibling definition is still written.
+func TestFetch_collisionQuarantine(t *testing.T) {
+	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		switch {
+		case strings.HasSuffix(r.URL.Path, "/OVAL/"), strings.HasSuffix(r.URL.Path, "/OVAL"):
+			http.ServeFile(w, r, filepath.Join("testdata", "fixtures", "collision", "index.html"))
+		case path.Base(r.URL.Path) == "alinux-3.2104.oval.xml":
+			http.ServeFile(w, r, filepath.Join("testdata", "fixtures", "collision", "alinux-3.2104.oval.xml"))
+		default:
+			http.NotFound(w, r)
+		}
+	}))
+	defer ts.Close()
+
+	dir := t.TempDir()
+	if err := oval.Fetch(oval.WithBaseURL(ts.URL+"/alinux/cve/data/OVAL/"), oval.WithDir(dir), oval.WithRetry(0)); err != nil {
+		t.Fatal("unexpected error:", err)
+	}
+
+	mustAbsent := []string{
+		"3.2104/definitions/oval:com.aliyun:def:20260001.json",
+		"3.2104/tests/rpminfo_test/oval:com.aliyun:tst:20260001001.json",
+		"3.2104/objects/rpminfo_object/oval:com.aliyun:obj:20260001001.json",
+		"3.2104/states/rpminfo_state/oval:com.aliyun:ste:20260001001.json",
+	}
+	for _, rel := range mustAbsent {
+		if _, err := os.Stat(filepath.Join(dir, filepath.FromSlash(rel))); !os.IsNotExist(err) {
+			t.Errorf("expected %s to be quarantined (absent), stat err = %v", rel, err)
+		}
+	}
+
+	mustExist := []string{
+		"3.2104/definitions/oval:com.aliyun:def:20250143.json",
+		"3.2104/tests/rpminfo_test/oval:com.aliyun:tst:20250143001.json",
+		"3.2104/objects/rpminfo_object/oval:com.aliyun:obj:20250143001.json",
+		"3.2104/states/rpminfo_state/oval:com.aliyun:ste:20250143001.json",
+		"3.2104/tests/textfilecontent54_test/oval:com.aliyun:tst:1.json",
+		"3.2104/objects/textfilecontent54_object/oval:com.aliyun:obj:1.json",
+		"3.2104/states/textfilecontent54_state/oval:com.aliyun:ste:1.json",
+	}
+	for _, rel := range mustExist {
+		if _, err := os.Stat(filepath.Join(dir, filepath.FromSlash(rel))); err != nil {
+			t.Errorf("expected non-colliding sibling %s to be written: %v", rel, err)
+		}
+	}
+}
+
 func assertJSONField(t *testing.T, path, want string) {
 	t.Helper()
 	b, err := os.ReadFile(path)

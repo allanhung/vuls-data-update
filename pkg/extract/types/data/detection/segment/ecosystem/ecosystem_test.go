@@ -49,6 +49,30 @@ func TestGetEcosystem(t *testing.T) {
 			},
 			want: ecosystem.Ecosystem("cpe"),
 		},
+		{
+			name: "alinux 3",
+			args: args{
+				family:  "alinux",
+				release: "3",
+			},
+			want: ecosystem.Ecosystem("alinux:3"),
+		},
+		{
+			name: "alinux 4",
+			args: args{
+				family:  "alinux",
+				release: "4",
+			},
+			want: ecosystem.Ecosystem("alinux:4"),
+		},
+		{
+			name: "alinux 3.2104",
+			args: args{
+				family:  "alinux",
+				release: "3.2104",
+			},
+			want: ecosystem.Ecosystem("alinux:3"),
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {

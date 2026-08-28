@@ -1,0 +1,10 @@
+{
+	"xmlns": "http://oval.mitre.org/XMLSchema/oval-definitions-5#linux",
+	"id": "oval:com.aliyun:ste:20260104008",
+	"version": "1",
+	"evr": {
+		"text": "0:tools-6.6.102-5.3.1.alnx4",
+		"datatype": "evr_string",
+		"operation": "less than"
+	}
+}

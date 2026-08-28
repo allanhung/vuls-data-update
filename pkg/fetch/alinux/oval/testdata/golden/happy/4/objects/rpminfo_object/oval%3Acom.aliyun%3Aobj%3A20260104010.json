@@ -1,0 +1,6 @@
+{
+	"xmlns": "http://oval.mitre.org/XMLSchema/oval-definitions-5#linux",
+	"id": "oval:com.aliyun:obj:20260104010",
+	"version": "1",
+	"name": "kernel-tools-libs-devel"
+}

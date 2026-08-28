@@ -63,11 +63,13 @@ func WithDir(dir string) Option {
 }
 
 var (
-	// Alibaba Cloud Linux patch-OVAL carries two advisory families:
-	// "ALINUX<major>-SA-<year>:<seq>" and the kernel-hotfix
-	// "HOTFIX-SA-<year>:<seq>". Both are keyed the same way.
-	advisorySourceRegexp = regexp.MustCompile(`^(?:ALINUX\d|HOTFIX)-SA$`)
-	advisoryIDRegexp     = regexp.MustCompile(`^(?:ALINUX\d|HOTFIX)-SA-(\d{4}):(\d+)$`)
+	// Alibaba Cloud Linux patch-OVAL carries several advisory-source families,
+	// all keyed the same way (by <year> from the id):
+	//   ALINUX<major>-SA-<year>:<seq>          e.g. ALINUX3-SA-2021:0001
+	//   ALINUX<major>-HOTFIX-SA-<year>:<seq>   e.g. ALINUX3-HOTFIX-SA-2026:0001
+	//   HOTFIX-SA-<year>:<seq>                 e.g. HOTFIX-SA-2023:0002
+	advisorySourceRegexp = regexp.MustCompile(`^(?:ALINUX\d(?:-HOTFIX)?|HOTFIX)-SA$`)
+	advisoryIDRegexp     = regexp.MustCompile(`^(?:ALINUX\d(?:-HOTFIX)?|HOTFIX)-SA-(\d{4}):(\d+)$`)
 	// cleanEVRRegexp matches a well-formed "epoch:version-release": digit-led
 	// epoch, then a body with exactly one '-' (RPM forbids '-' in version and
 	// release). This is the shape every emitted LessThan / Fixed must have.
@@ -103,6 +105,12 @@ func Extract(inputDir string, opts ...Option) error {
 	if err != nil {
 		return errors.Wrapf(err, "read dir %s", inputDir)
 	}
+
+	// written maps an output path to the definition id that produced it. Two
+	// definitions (possibly from different majors) that resolve to the same
+	// advisory id would otherwise silently overwrite each other; guard against
+	// that and name both ids in the error.
+	written := make(map[string]string)
 
 	for _, verEntry := range vers {
 		if !verEntry.IsDir() {
@@ -145,11 +153,18 @@ func Extract(inputDir string, opts ...Option) error {
 
 			m := advisoryIDRegexp.FindStringSubmatch(string(data.ID))
 			if m == nil {
-				return errors.Errorf("unexpected advisory ID format. expected: %q, actual: %q", "(ALINUX<major>|HOTFIX)-SA-<year>:<id>", data.ID)
+				return errors.Errorf("unexpected advisory ID format. expected: %q, actual: %q", "(ALINUX<major>[-HOTFIX]|HOTFIX)-SA-<year>:<id>", data.ID)
 			}
 			year := m[1]
 
 			dst := filepath.Join(options.dir, "data", year, fmt.Sprintf("%s.json", strings.ReplaceAll(string(data.ID), ":", "-")))
+			if prev, ok := written[dst]; ok {
+				return errors.Errorf("duplicate advisory output key %s: definitions %s and %s both map to %q", dst, prev, def.ID, data.ID)
+			}
+			if _, err := os.Stat(dst); err == nil {
+				return errors.Errorf("advisory output key %s already exists on disk (definition %s)", dst, def.ID)
+			}
+			written[dst] = def.ID
 			if err := util.Write(dst, data, true); err != nil {
 				return errors.Wrapf(err, "write %s", dst)
 			}
@@ -203,10 +218,10 @@ func (e extractor) extract(def alinux.Definition) (dataTypes.Data, int, error) {
 		}
 	}
 	if refID == "" {
-		return dataTypes.Data{}, 0, errors.Errorf("no (ALINUX<major>|HOTFIX)-SA reference found. definition: %s", def.ID)
+		return dataTypes.Data{}, 0, errors.Errorf("no (ALINUX<major>[-HOTFIX]|HOTFIX)-SA reference found. definition: %s", def.ID)
 	}
 	if !advisoryIDRegexp.MatchString(refID) {
-		return dataTypes.Data{}, 0, errors.Errorf("unexpected advisory ID format. expected: %q, actual: %q", "(ALINUX<major>|HOTFIX)-SA-<year>:<id>", refID)
+		return dataTypes.Data{}, 0, errors.Errorf("unexpected advisory ID format. expected: %q, actual: %q", "(ALINUX<major>[-HOTFIX]|HOTFIX)-SA-<year>:<id>", refID)
 	}
 
 	ds, repaired, err := e.collectPackages(def)
@@ -327,22 +342,13 @@ func (e extractor) collectPackages(def alinux.Definition) ([]detectionTypes.Dete
 		return nil, 0, errors.Wrap(err, "walk criteria")
 	}
 
-	// Pass 1: collect the already-clean EVR anchors of this OR-group. With the
-	// dash-count repair as primary this set only feeds repairEVR's unreachable
-	// blind fallback, so it is kept minimal.
-	clean := make(map[string]struct{})
-	for _, p := range raws {
-		if cleanEVRRegexp.MatchString(p.fixedVersion) {
-			clean[p.fixedVersion] = struct{}{}
-		}
-	}
-
-	// Pass 2: repair every fixed version via the RPM dash-count invariant. Any
-	// failure fails the whole definition — never emit partial data.
+	// Repair every fixed version via the RPM dash-count invariant. The repair is
+	// purely per-EVR: any failure fails the whole definition (the caller drops it
+	// and performs no partial write).
 	repaired := 0
 	m := make(map[ovalPackage]struct{})
 	for _, p := range raws {
-		fixed, err := repairEVR(p.fixedVersion, clean)
+		fixed, err := repairEVR(p.fixedVersion)
 		if err != nil {
 			return nil, 0, errors.Wrapf(err, "repair evr, definition: %s, package: %s", def.ID, p.name)
 		}

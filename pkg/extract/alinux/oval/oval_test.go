@@ -38,6 +38,14 @@ func TestExtract(t *testing.T) {
 			fixturePath: "./testdata/fixtures/unrepairable",
 			hasError:    true,
 		},
+		{
+			// C1 fail-hard contract: a definition whose only <reference source>
+			// is an unrecognised advisory family (BOGUS-SA) must abort the whole
+			// Extract, never be silently skipped.
+			name:        "unknown-advisory-source",
+			fixturePath: "./testdata/fixtures/unknown-source",
+			hasError:    true,
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -257,6 +265,46 @@ func TestExtract_hotfix(t *testing.T) {
 	const wantEVR = "0:1.0-20221221203219.al8"
 	if lt := got[0].Version.Affected.Range[0].LessThan; lt != wantEVR {
 		t.Errorf("LessThan = %q, want %q", lt, wantEVR)
+	}
+	if fx := got[0].Version.Affected.Fixed; len(fx) != 1 || fx[0] != wantEVR {
+		t.Errorf("Fixed = %v, want [%q]", fx, wantEVR)
+	}
+}
+
+// TestExtract_alinux3_hotfix_sa pins the C1 fix: the "ALINUX<major>-HOTFIX-SA"
+// advisory-source shape (real: ALINUX3-HOTFIX-SA-2026:0001) is extracted, keyed
+// by year, keeps the colon in data.ID, lands under ecosystem alinux:3, and has
+// its spliced kernel-hotfix EVR repaired via the dash-count invariant.
+func TestExtract_alinux3_hotfix_sa(t *testing.T) {
+	outputDir := t.TempDir()
+	if err := oval.Extract(utiltest.QueryUnescapeFileTree(t, "./testdata/fixtures/happy"), oval.WithDir(outputDir)); err != nil {
+		t.Fatal("unexpected error:", err)
+	}
+
+	p := filepath.Join(outputDir, "data", "2026", "ALINUX3-HOTFIX-SA-2026-0001.json")
+	f, err := os.Open(p)
+	if err != nil {
+		t.Fatalf("expected ALINUX3-HOTFIX-SA advisory at %s: %v", p, err)
+	}
+	defer f.Close()
+	var data dataTypes.Data
+	if err := json.UnmarshalRead(f, &data); err != nil {
+		t.Fatal(err)
+	}
+
+	if string(data.ID) != "ALINUX3-HOTFIX-SA-2026:0001" {
+		t.Errorf("data.ID = %q, want %q (colon preserved)", data.ID, "ALINUX3-HOTFIX-SA-2026:0001")
+	}
+	if len(data.Detections) != 1 || string(data.Detections[0].Ecosystem) != "alinux:3" {
+		t.Fatalf("detections = %+v, want one with ecosystem alinux:3", data.Detections)
+	}
+	got := data.Detections[0].Conditions[0].Criteria.Criterions
+	if len(got) != 1 {
+		t.Fatalf("criterions = %d, want 1", len(got))
+	}
+	const wantEVR = "0:1.0-20260510120832.al8"
+	if lt := got[0].Version.Affected.Range[0].LessThan; lt != wantEVR {
+		t.Errorf("LessThan = %q, want %q (repaired)", lt, wantEVR)
 	}
 	if fx := got[0].Version.Affected.Fixed; len(fx) != 1 || fx[0] != wantEVR {
 		t.Errorf("Fixed = %v, want [%q]", fx, wantEVR)

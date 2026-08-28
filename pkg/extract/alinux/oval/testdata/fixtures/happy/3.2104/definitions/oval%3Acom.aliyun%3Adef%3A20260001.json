@@ -1,0 +1,66 @@
+{
+	"id": "oval:com.aliyun:def:20260001",
+	"version": "1",
+	"class": "patch",
+	"metadata": {
+		"title": "ALINUX3-HOTFIX-SA-2026:0001: kernel-hotfix security update (Important)",
+		"affected": {
+			"family": "unix",
+			"platform": "Alibaba Cloud Linux 3"
+		},
+		"reference": [
+			{
+				"ref_id": "ALINUX3-HOTFIX-SA-2026:0001",
+				"ref_url": "https://alas.aliyun-inc.com/errata/detail/ALINUX3-HOTFIX-SA-2026:0001",
+				"source": "ALINUX3-HOTFIX-SA"
+			}
+		],
+		"description": "Package updates are available for Alibaba Cloud Linux 3 that fix the following vulnerabilities:\n\nCVE-2026-43284:\nxfrm: esp: avoid in-place decrypt on shared skb frags.",
+		"advisory": {
+			"from": "alas.aliyun-inc.com",
+			"severity": "Important",
+			"rights": "Copyright 2026 Alibaba Cloud Linux",
+			"issued": {
+				"date": "2026-05-13"
+			},
+			"updated": {
+				"date": "2026-05-13"
+			},
+			"cve": [
+				{
+					"text": "CVE-2026-43284",
+					"cvss3": "7.8/CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+					"impact": "Important",
+					"cwe": "CWE-123",
+					"href": "https://alas.aliyun-inc.com/cves/detail/CVE-2026-43284",
+					"public": "20260511"
+				}
+			],
+			"affected_cpe_list": {
+				"cpe": [
+					"cpe:2.3:o:alibabacloud:alibaba_cloud_linux_3:-:*:*:*:*:*:*:*"
+				]
+			}
+		}
+	},
+	"criteria": {
+		"operator": "AND",
+		"criterias": [
+			{
+				"operator": "OR",
+				"criterions": [
+					{
+						"test_ref": "oval:com.aliyun:tst:20260001001",
+						"comment": "kernel-hotfix-27289074-5.10.134-12 is earlier than 0:hotfix-27289074-5.10.134-12-1.0-20260510120832.al8"
+					}
+				]
+			}
+		],
+		"criterions": [
+			{
+				"test_ref": "oval:com.aliyun:tst:1",
+				"comment": "Alibaba Cloud Linux 3.2104 is installed"
+			}
+		]
+	}
+}

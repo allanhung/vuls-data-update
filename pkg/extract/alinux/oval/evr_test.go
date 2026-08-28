@@ -2,31 +2,6 @@ package oval
 
 import "testing"
 
-func TestSanitizeEVR(t *testing.T) {
-	clean := map[string]struct{}{"0:4.19.91-28.7.al7": {}, "0:7.1-3.alnx4": {}}
-	for _, tt := range []struct {
-		in      string
-		want    string
-		wantErr bool
-	}{
-		{"0:4.19.91-28.7.al7", "0:4.19.91-28.7.al7", false}, // already clean
-		{"0:debug-devel-4.19.91-28.7.al7", "0:4.19.91-28.7.al7", false},
-		{"0:devel-4.19.91-28.7.al7", "0:4.19.91-28.7.al7", false},
-		{"0:utils-devel-7.1-3.alnx4", "0:7.1-3.alnx4", false},
-		{"0:agents-4.9.0-54.al8.36", "", true}, // repaired value not among clean anchors
-		{"0:", "", true},                       // empty version
-		{"4.19.91-28.7.al7", "", true},         // missing epoch
-	} {
-		got, err := sanitizeEVR(tt.in, clean)
-		if (err != nil) != tt.wantErr {
-			t.Fatalf("sanitizeEVR(%q) err=%v wantErr=%v", tt.in, err, tt.wantErr)
-		}
-		if !tt.wantErr && got != tt.want {
-			t.Fatalf("sanitizeEVR(%q) = %q want %q", tt.in, got, tt.want)
-		}
-	}
-}
-
 // TestRepairEVR exercises the RPM dash-count invariant. Every corrupted input
 // here is a real value taken from oval-samples/alinux-{3,4}.oval.xml.
 func TestRepairEVR(t *testing.T) {
@@ -94,9 +69,18 @@ func TestRepairEVR(t *testing.T) {
 			evr:     "0:",
 			wantErr: true,
 		},
+		{
+			// Regression for I2/I5: two dashes, but the last-two-tokens rebuild
+			// ("0:2-") has an empty release, so it fails cleanEVRRegexp. The old
+			// sanitizeEVR fallback would have short-circuited and emitted the
+			// original malformed string with err==nil. Now: fail-closed.
+			name:    "trailing dash, unrepairable",
+			evr:     "0:1-2-",
+			wantErr: true,
+		},
 	} {
 		t.Run(tt.name, func(t *testing.T) {
-			got, err := repairEVR(tt.evr, nil)
+			got, err := repairEVR(tt.evr)
 			if (err != nil) != tt.wantErr {
 				t.Fatalf("repairEVR(%q) err=%v wantErr=%v", tt.evr, err, tt.wantErr)
 			}

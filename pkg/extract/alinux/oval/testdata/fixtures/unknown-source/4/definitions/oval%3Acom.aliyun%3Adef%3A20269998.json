@@ -1,0 +1,66 @@
+{
+	"id": "oval:com.aliyun:def:20269998",
+	"version": "1",
+	"class": "patch",
+	"metadata": {
+		"title": "BOGUS-SA-2026:0001: unknown advisory source (Important)",
+		"affected": {
+			"family": "unix",
+			"platform": "Alibaba Cloud Linux 4"
+		},
+		"reference": [
+			{
+				"ref_id": "BOGUS-SA-2026:0001",
+				"ref_url": "https://alas.aliyun-inc.com/errata/detail/BOGUS-SA-2026:0001",
+				"source": "BOGUS-SA"
+			}
+		],
+		"description": "A definition whose only <reference source> is an advisory family the extractor does not recognise. Extract must fail hard (whole major dropped), never silently skip it.",
+		"advisory": {
+			"from": "alas.aliyun-inc.com",
+			"severity": "Important",
+			"rights": "Copyright 2026 Alibaba Cloud Linux",
+			"issued": {
+				"date": "2026-06-01"
+			},
+			"updated": {
+				"date": "2026-06-01"
+			},
+			"cve": [
+				{
+					"text": "CVE-2026-09998",
+					"cvss3": "7.8/CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+					"impact": "Important",
+					"cwe": "CWE-000",
+					"href": "https://alas.aliyun-inc.com/cves/detail/CVE-2026-09998",
+					"public": "20260601"
+				}
+			],
+			"affected_cpe_list": {
+				"cpe": [
+					"cpe:2.3:o:alibabacloud:alibaba_cloud_linux_4:-:*:*:*:*:*:*:*"
+				]
+			}
+		}
+	},
+	"criteria": {
+		"operator": "AND",
+		"criterias": [
+			{
+				"operator": "OR",
+				"criterions": [
+					{
+						"test_ref": "oval:com.aliyun:tst:20269998001",
+						"comment": "pkg is earlier than 0:1.0-1.alnx4"
+					}
+				]
+			}
+		],
+		"criterions": [
+			{
+				"test_ref": "oval:com.aliyun:tst:1",
+				"comment": "Alibaba Cloud Linux 4 is installed"
+			}
+		]
+	}
+}

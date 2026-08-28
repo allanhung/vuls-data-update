@@ -1,0 +1,13 @@
+{
+	"xmlns": "http://oval.mitre.org/XMLSchema/oval-definitions-5#linux",
+	"check": "all",
+	"comment": "kernel-tools-libs-devel is earlier than 0:tools-libs-devel-6.6.102-5.3.1.alnx4",
+	"version": "1",
+	"id": "oval:com.aliyun:tst:20260104010",
+	"object": {
+		"object_ref": "oval:com.aliyun:obj:20260104010"
+	},
+	"state": {
+		"state_ref": "oval:com.aliyun:ste:20260104008"
+	}
+}

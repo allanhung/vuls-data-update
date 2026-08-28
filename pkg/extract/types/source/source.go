@@ -21,6 +21,7 @@ const (
 	AltOVAL                    SourceID = "alt-oval"
 	Amazon                     SourceID = "amazon"
 	AndroidOSV                 SourceID = "android-osv"
+	AlinuxOVAL                 SourceID = "alinux-oval"
 	AnolisOVAL                 SourceID = "anolis-oval"
 	AppleSecurityReleases      SourceID = "apple-security-releases"
 	Arch                       SourceID = "arch"

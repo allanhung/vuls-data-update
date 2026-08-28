@@ -9,6 +9,7 @@ import (
 	"github.com/pkg/errors"
 	"github.com/spf13/cobra"
 
+	alinuxOVAL "github.com/MaineK00n/vuls-data-update/pkg/fetch/alinux/oval"
 	almaErrata "github.com/MaineK00n/vuls-data-update/pkg/fetch/alma/errata"
 	almaOSV "github.com/MaineK00n/vuls-data-update/pkg/fetch/alma/osv"
 	almaOVAL "github.com/MaineK00n/vuls-data-update/pkg/fetch/alma/oval"
@@ -217,6 +218,7 @@ func NewCmdFetch() *cobra.Command {
 
 	cmd.AddCommand(
 		newCmdAlmaErrata(), newCmdAlmaOSV(), newCmdAlmaOVAL(), newCmdAlmaUpdateinfo(),
+		newCmdAlinuxOVAL(),
 		newCmdAlpineSecDB(), newCmdAlpineOSV(),
 		newCmdAltOVAL(),
 		newCmdAmazon(),
@@ -570,6 +572,33 @@ func newCmdAndroidOSV() *cobra.Command {
 		RunE: func(_ *cobra.Command, _ []string) error {
 			if err := androidOSV.Fetch(androidOSV.WithDir(options.dir), androidOSV.WithRetry(options.retry)); err != nil {
 				return errors.Wrap(err, "failed to fetch android")
+			}
+			return nil
+		},
+	}
+
+	cmd.Flags().StringVarP(&options.dir, "dir", "d", options.dir, "output fetch results to specified directory")
+	cmd.Flags().IntVarP(&options.retry, "retry", "", options.retry, "number of retry http request")
+
+	return cmd
+}
+
+func newCmdAlinuxOVAL() *cobra.Command {
+	options := &base{
+		dir:   filepath.Join(util.CacheDir(), "fetch", "alinux", "oval"),
+		retry: 3,
+	}
+
+	cmd := &cobra.Command{
+		Use:   "alinux-oval",
+		Short: "Fetch Alibaba Cloud Linux OVAL data source",
+		Example: heredoc.Doc(`
+			$ vuls-data-update fetch alinux-oval
+		`),
+		Args: cobra.NoArgs,
+		RunE: func(_ *cobra.Command, _ []string) error {
+			if err := alinuxOVAL.Fetch(alinuxOVAL.WithDir(options.dir), alinuxOVAL.WithRetry(options.retry)); err != nil {
+				return errors.Wrap(err, "failed to fetch alinux oval")
 			}
 			return nil
 		},

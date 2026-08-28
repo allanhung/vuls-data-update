@@ -1,0 +1,66 @@
+{
+	"id": "oval:com.aliyun:def:20250143",
+	"version": "1",
+	"class": "patch",
+	"metadata": {
+		"title": "ALINUX4-SA-2025:0143: haproxy security update (Moderate)",
+		"affected": {
+			"family": "unix",
+			"platform": "Alibaba Cloud Linux 4"
+		},
+		"reference": [
+			{
+				"ref_id": "ALINUX4-SA-2025:0143",
+				"ref_url": "https://alas.aliyun-inc.com/errata/detail/ALINUX4-SA-2025:0143",
+				"source": "ALINUX4-SA"
+			}
+		],
+		"description": "Package updates are available for Alibaba Cloud Linux 4 that fix the following vulnerabilities:\n\nCVE-2025-32464:\nHAProxy 2.2 through 3.1.6, in certain uncommon configurations, has a sample_conv_regsub heap-based buffer overflow because of mishandling of the replacement of multiple short patterns with a longer one.",
+		"advisory": {
+			"from": "alas.aliyun-inc.com",
+			"severity": "Moderate",
+			"rights": "Copyright 2026 Alibaba Cloud Linux",
+			"issued": {
+				"date": "2025-11-12"
+			},
+			"updated": {
+				"date": "2025-11-12"
+			},
+			"cve": [
+				{
+					"text": "CVE-2025-32464",
+					"cvss3": "6.8/CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:C/C:N/I:N/A:H",
+					"impact": "Moderate",
+					"cwe": "CWE-1025",
+					"href": "https://alas.aliyun-inc.com/cves/detail/CVE-2025-32464",
+					"public": "20251112"
+				}
+			],
+			"affected_cpe_list": {
+				"cpe": [
+					"cpe:2.3:o:alibabacloud:alibaba_cloud_linux_4:-:*:*:*:*:*:*:*"
+				]
+			}
+		}
+	},
+	"criteria": {
+		"operator": "AND",
+		"criterias": [
+			{
+				"operator": "OR",
+				"criterions": [
+					{
+						"test_ref": "oval:com.aliyun:tst:20250143001",
+						"comment": "haproxy is earlier than 0:3.0.5-2.alnx4"
+					}
+				]
+			}
+		],
+		"criterions": [
+			{
+				"test_ref": "oval:com.aliyun:tst:1",
+				"comment": "Alibaba Cloud Linux 4 is installed"
+			}
+		]
+	}
+}

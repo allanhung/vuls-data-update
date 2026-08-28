@@ -1,0 +1,15 @@
+{
+	"xmlns": "http://oval.mitre.org/XMLSchema/oval-definitions-5#independent",
+	"id": "oval:com.aliyun:obj:1",
+	"version": "1",
+	"path": "/etc",
+	"filename": "alinux-release",
+	"pattern": {
+		"text": "(Alibaba Cloud Linux release) \\d.*",
+		"operation": "pattern match"
+	},
+	"instance": {
+		"text": "1",
+		"datatype": "int"
+	}
+}

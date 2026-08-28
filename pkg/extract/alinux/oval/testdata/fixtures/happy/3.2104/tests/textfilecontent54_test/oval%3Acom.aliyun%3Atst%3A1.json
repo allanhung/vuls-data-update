@@ -1,0 +1,13 @@
+{
+	"xmlns": "http://oval.mitre.org/XMLSchema/oval-definitions-5#independent",
+	"check": "at least one",
+	"version": "1",
+	"comment": "Alibaba Cloud Linux 3.2104 is installed",
+	"id": "oval:com.aliyun:tst:1",
+	"object": {
+		"object_ref": "oval:com.aliyun:obj:1"
+	},
+	"state": {
+		"state_ref": "oval:com.aliyun:ste:1"
+	}
+}

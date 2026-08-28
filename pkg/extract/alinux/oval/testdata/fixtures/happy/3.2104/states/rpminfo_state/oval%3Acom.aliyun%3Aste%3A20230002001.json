@@ -1,0 +1,10 @@
+{
+	"xmlns": "http://oval.mitre.org/XMLSchema/oval-definitions-5#linux",
+	"id": "oval:com.aliyun:ste:20230002001",
+	"version": "1",
+	"evr": {
+		"text": "0:hotfix-11169823-11.1.al8-1.0-20221221203219.al8",
+		"datatype": "evr_string",
+		"operation": "less than"
+	}
+}

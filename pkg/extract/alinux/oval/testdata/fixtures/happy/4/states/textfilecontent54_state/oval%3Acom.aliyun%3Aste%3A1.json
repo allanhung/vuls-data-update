@@ -1,0 +1,9 @@
+{
+	"xmlns": "http://oval.mitre.org/XMLSchema/oval-definitions-5#independent",
+	"id": "oval:com.aliyun:ste:1",
+	"version": "1",
+	"text": {
+		"text": "4",
+		"operation": "pattern match"
+	}
+}

@@ -1,0 +1,6 @@
+{
+	"xmlns": "http://oval.mitre.org/XMLSchema/oval-definitions-5#linux",
+	"id": "oval:com.aliyun:obj:20250143001",
+	"version": "1",
+	"name": "haproxy"
+}

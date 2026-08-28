@@ -1,0 +1,405 @@
+{
+	"id": "ALINUX4-SA-2026:0104",
+	"advisories": [
+		{
+			"content": {
+				"id": "ALINUX4-SA-2026:0104",
+				"title": "ALINUX4-SA-2026:0104: kernel security update (Important)",
+				"description": "Package updates are available for Alibaba Cloud Linux 4 that fix the following vulnerabilities:\n\nCVE-2026-31431:\nIn the Linux kernel, the following vulnerability has been resolved:\ncrypto: algif_aead - Revert to operating out-of-place\nThis mostly reverts commit 72548b093ee3 except for the copying of\nthe associated data.\nThere is no benefit in operating in-place in algif_aead since the\nsource and destination come from different mappings.  Get rid of\nall the complexity added for in-place operation and just copy the\nAD directly.",
+				"severity": [
+					{
+						"type": "vendor",
+						"source": "alas.aliyun.com",
+						"vendor": "Important"
+					}
+				],
+				"references": [
+					{
+						"source": "alas.aliyun.com",
+						"url": "https://alas.aliyun.com/errata/detail/ALINUX4-SA-2026:0104"
+					}
+				],
+				"published": "2026-05-07T00:00:00Z"
+			},
+			"segments": [
+				{
+					"ecosystem": "alinux:4"
+				}
+			]
+		}
+	],
+	"vulnerabilities": [
+		{
+			"content": {
+				"id": "CVE-2026-31431",
+				"severity": [
+					{
+						"type": "cvss_v31",
+						"source": "alas.aliyun.com",
+						"cvss_v31": {
+							"vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+							"base_score": 7.8,
+							"base_severity": "HIGH",
+							"temporal_score": 7.8,
+							"temporal_severity": "HIGH",
+							"environmental_score": 7.8,
+							"environmental_severity": "HIGH"
+						}
+					}
+				],
+				"references": [
+					{
+						"source": "alas.aliyun.com",
+						"url": "https://alas.aliyun.com/cves/detail/CVE-2026-31431"
+					}
+				],
+				"published": "2026-05-07T00:00:00Z"
+			},
+			"segments": [
+				{
+					"ecosystem": "alinux:4"
+				}
+			]
+		}
+	],
+	"detections": [
+		{
+			"ecosystem": "alinux:4",
+			"conditions": [
+				{
+					"criteria": {
+						"operator": "OR",
+						"criterions": [
+							{
+								"type": "version",
+								"version": {
+									"vulnerable": true,
+									"fix_status": {
+										"class": "fixed"
+									},
+									"package": {
+										"type": "binary",
+										"binary": {
+											"name": "bpftool"
+										}
+									},
+									"affected": {
+										"type": "rpm",
+										"range": [
+											{
+												"lt": "0:6.6.102-5.3.1.alnx4"
+											}
+										],
+										"fixed": [
+											"0:6.6.102-5.3.1.alnx4"
+										]
+									}
+								}
+							},
+							{
+								"type": "version",
+								"version": {
+									"vulnerable": true,
+									"fix_status": {
+										"class": "fixed"
+									},
+									"package": {
+										"type": "binary",
+										"binary": {
+											"name": "kernel"
+										}
+									},
+									"affected": {
+										"type": "rpm",
+										"range": [
+											{
+												"lt": "0:6.6.102-5.3.1.alnx4"
+											}
+										],
+										"fixed": [
+											"0:6.6.102-5.3.1.alnx4"
+										]
+									}
+								}
+							},
+							{
+								"type": "version",
+								"version": {
+									"vulnerable": true,
+									"fix_status": {
+										"class": "fixed"
+									},
+									"package": {
+										"type": "binary",
+										"binary": {
+											"name": "kernel-debug"
+										}
+									},
+									"affected": {
+										"type": "rpm",
+										"range": [
+											{
+												"lt": "0:6.6.102-5.3.1.alnx4"
+											}
+										],
+										"fixed": [
+											"0:6.6.102-5.3.1.alnx4"
+										]
+									}
+								}
+							},
+							{
+								"type": "version",
+								"version": {
+									"vulnerable": true,
+									"fix_status": {
+										"class": "fixed"
+									},
+									"package": {
+										"type": "binary",
+										"binary": {
+											"name": "kernel-debug-devel"
+										}
+									},
+									"affected": {
+										"type": "rpm",
+										"range": [
+											{
+												"lt": "0:6.6.102-5.3.1.alnx4"
+											}
+										],
+										"fixed": [
+											"0:6.6.102-5.3.1.alnx4"
+										]
+									}
+								}
+							},
+							{
+								"type": "version",
+								"version": {
+									"vulnerable": true,
+									"fix_status": {
+										"class": "fixed"
+									},
+									"package": {
+										"type": "binary",
+										"binary": {
+											"name": "kernel-devel"
+										}
+									},
+									"affected": {
+										"type": "rpm",
+										"range": [
+											{
+												"lt": "0:6.6.102-5.3.1.alnx4"
+											}
+										],
+										"fixed": [
+											"0:6.6.102-5.3.1.alnx4"
+										]
+									}
+								}
+							},
+							{
+								"type": "version",
+								"version": {
+									"vulnerable": true,
+									"fix_status": {
+										"class": "fixed"
+									},
+									"package": {
+										"type": "binary",
+										"binary": {
+											"name": "kernel-headers"
+										}
+									},
+									"affected": {
+										"type": "rpm",
+										"range": [
+											{
+												"lt": "0:6.6.102-5.3.1.alnx4"
+											}
+										],
+										"fixed": [
+											"0:6.6.102-5.3.1.alnx4"
+										]
+									}
+								}
+							},
+							{
+								"type": "version",
+								"version": {
+									"vulnerable": true,
+									"fix_status": {
+										"class": "fixed"
+									},
+									"package": {
+										"type": "binary",
+										"binary": {
+											"name": "kernel-tools"
+										}
+									},
+									"affected": {
+										"type": "rpm",
+										"range": [
+											{
+												"lt": "0:6.6.102-5.3.1.alnx4"
+											}
+										],
+										"fixed": [
+											"0:6.6.102-5.3.1.alnx4"
+										]
+									}
+								}
+							},
+							{
+								"type": "version",
+								"version": {
+									"vulnerable": true,
+									"fix_status": {
+										"class": "fixed"
+									},
+									"package": {
+										"type": "binary",
+										"binary": {
+											"name": "kernel-tools-libs"
+										}
+									},
+									"affected": {
+										"type": "rpm",
+										"range": [
+											{
+												"lt": "0:6.6.102-5.3.1.alnx4"
+											}
+										],
+										"fixed": [
+											"0:6.6.102-5.3.1.alnx4"
+										]
+									}
+								}
+							},
+							{
+								"type": "version",
+								"version": {
+									"vulnerable": true,
+									"fix_status": {
+										"class": "fixed"
+									},
+									"package": {
+										"type": "binary",
+										"binary": {
+											"name": "kernel-tools-libs-devel"
+										}
+									},
+									"affected": {
+										"type": "rpm",
+										"range": [
+											{
+												"lt": "0:6.6.102-5.3.1.alnx4"
+											}
+										],
+										"fixed": [
+											"0:6.6.102-5.3.1.alnx4"
+										]
+									}
+								}
+							},
+							{
+								"type": "version",
+								"version": {
+									"vulnerable": true,
+									"fix_status": {
+										"class": "fixed"
+									},
+									"package": {
+										"type": "binary",
+										"binary": {
+											"name": "perf"
+										}
+									},
+									"affected": {
+										"type": "rpm",
+										"range": [
+											{
+												"lt": "0:6.6.102-5.3.1.alnx4"
+											}
+										],
+										"fixed": [
+											"0:6.6.102-5.3.1.alnx4"
+										]
+									}
+								}
+							},
+							{
+								"type": "version",
+								"version": {
+									"vulnerable": true,
+									"fix_status": {
+										"class": "fixed"
+									},
+									"package": {
+										"type": "binary",
+										"binary": {
+											"name": "python3-perf"
+										}
+									},
+									"affected": {
+										"type": "rpm",
+										"range": [
+											{
+												"lt": "0:6.6.102-5.3.1.alnx4"
+											}
+										],
+										"fixed": [
+											"0:6.6.102-5.3.1.alnx4"
+										]
+									}
+								}
+							}
+						]
+					}
+				}
+			]
+		}
+	],
+	"data_source": {
+		"id": "alinux-oval",
+		"raws": [
+			"happy/4/definitions/oval:com.aliyun:def:20260104.json",
+			"happy/4/objects/rpminfo_object/oval:com.aliyun:obj:20260104001.json",
+			"happy/4/objects/rpminfo_object/oval:com.aliyun:obj:20260104002.json",
+			"happy/4/objects/rpminfo_object/oval:com.aliyun:obj:20260104003.json",
+			"happy/4/objects/rpminfo_object/oval:com.aliyun:obj:20260104004.json",
+			"happy/4/objects/rpminfo_object/oval:com.aliyun:obj:20260104005.json",
+			"happy/4/objects/rpminfo_object/oval:com.aliyun:obj:20260104006.json",
+			"happy/4/objects/rpminfo_object/oval:com.aliyun:obj:20260104007.json",
+			"happy/4/objects/rpminfo_object/oval:com.aliyun:obj:20260104008.json",
+			"happy/4/objects/rpminfo_object/oval:com.aliyun:obj:20260104009.json",
+			"happy/4/objects/rpminfo_object/oval:com.aliyun:obj:20260104010.json",
+			"happy/4/objects/rpminfo_object/oval:com.aliyun:obj:20260104011.json",
+			"happy/4/objects/rpminfo_object/oval:com.aliyun:obj:20260104012.json",
+			"happy/4/states/rpminfo_state/oval:com.aliyun:ste:20260104001.json",
+			"happy/4/states/rpminfo_state/oval:com.aliyun:ste:20260104002.json",
+			"happy/4/states/rpminfo_state/oval:com.aliyun:ste:20260104003.json",
+			"happy/4/states/rpminfo_state/oval:com.aliyun:ste:20260104004.json",
+			"happy/4/states/rpminfo_state/oval:com.aliyun:ste:20260104005.json",
+			"happy/4/states/rpminfo_state/oval:com.aliyun:ste:20260104006.json",
+			"happy/4/states/rpminfo_state/oval:com.aliyun:ste:20260104007.json",
+			"happy/4/states/rpminfo_state/oval:com.aliyun:ste:20260104008.json",
+			"happy/4/states/rpminfo_state/oval:com.aliyun:ste:20260104009.json",
+			"happy/4/tests/rpminfo_test/oval:com.aliyun:tst:20260104001.json",
+			"happy/4/tests/rpminfo_test/oval:com.aliyun:tst:20260104002.json",
+			"happy/4/tests/rpminfo_test/oval:com.aliyun:tst:20260104003.json",
+			"happy/4/tests/rpminfo_test/oval:com.aliyun:tst:20260104004.json",
+			"happy/4/tests/rpminfo_test/oval:com.aliyun:tst:20260104005.json",
+			"happy/4/tests/rpminfo_test/oval:com.aliyun:tst:20260104006.json",
+			"happy/4/tests/rpminfo_test/oval:com.aliyun:tst:20260104007.json",
+			"happy/4/tests/rpminfo_test/oval:com.aliyun:tst:20260104008.json",
+			"happy/4/tests/rpminfo_test/oval:com.aliyun:tst:20260104009.json",
+			"happy/4/tests/rpminfo_test/oval:com.aliyun:tst:20260104010.json",
+			"happy/4/tests/rpminfo_test/oval:com.aliyun:tst:20260104011.json",
+			"happy/4/tests/rpminfo_test/oval:com.aliyun:tst:20260104012.json",
+			"happy/4/tests/textfilecontent54_test/oval:com.aliyun:tst:1.json"
+		]
+	}
+}

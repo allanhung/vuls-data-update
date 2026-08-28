@@ -1,0 +1,115 @@
+{
+	"id": "ALINUX4-SA-2025:0143",
+	"advisories": [
+		{
+			"content": {
+				"id": "ALINUX4-SA-2025:0143",
+				"title": "ALINUX4-SA-2025:0143: haproxy security update (Moderate)",
+				"description": "Package updates are available for Alibaba Cloud Linux 4 that fix the following vulnerabilities:\n\nCVE-2025-32464:\nHAProxy 2.2 through 3.1.6, in certain uncommon configurations, has a sample_conv_regsub heap-based buffer overflow because of mishandling of the replacement of multiple short patterns with a longer one.",
+				"severity": [
+					{
+						"type": "vendor",
+						"source": "alas.aliyun.com",
+						"vendor": "Moderate"
+					}
+				],
+				"references": [
+					{
+						"source": "alas.aliyun.com",
+						"url": "https://alas.aliyun.com/errata/detail/ALINUX4-SA-2025:0143"
+					}
+				],
+				"published": "2025-11-12T00:00:00Z"
+			},
+			"segments": [
+				{
+					"ecosystem": "alinux:4"
+				}
+			]
+		}
+	],
+	"vulnerabilities": [
+		{
+			"content": {
+				"id": "CVE-2025-32464",
+				"severity": [
+					{
+						"type": "cvss_v31",
+						"source": "alas.aliyun.com",
+						"cvss_v31": {
+							"vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:C/C:N/I:N/A:H",
+							"base_score": 6.8,
+							"base_severity": "MEDIUM",
+							"temporal_score": 6.8,
+							"temporal_severity": "MEDIUM",
+							"environmental_score": 6.8,
+							"environmental_severity": "MEDIUM"
+						}
+					}
+				],
+				"references": [
+					{
+						"source": "alas.aliyun.com",
+						"url": "https://alas.aliyun.com/cves/detail/CVE-2025-32464"
+					}
+				],
+				"published": "2025-11-12T00:00:00Z"
+			},
+			"segments": [
+				{
+					"ecosystem": "alinux:4"
+				}
+			]
+		}
+	],
+	"detections": [
+		{
+			"ecosystem": "alinux:4",
+			"conditions": [
+				{
+					"criteria": {
+						"operator": "OR",
+						"criterions": [
+							{
+								"type": "version",
+								"version": {
+									"vulnerable": true,
+									"fix_status": {
+										"class": "fixed"
+									},
+									"package": {
+										"type": "binary",
+										"binary": {
+											"name": "haproxy"
+										}
+									},
+									"affected": {
+										"type": "rpm",
+										"range": [
+											{
+												"lt": "0:3.0.5-2.alnx4"
+											}
+										],
+										"fixed": [
+											"0:3.0.5-2.alnx4"
+										]
+									}
+								}
+							}
+						]
+					}
+				}
+			]
+		}
+	],
+	"data_source": {
+		"id": "alinux-oval",
+		"raws": [
+			"happy/4/definitions/oval:com.aliyun:def:20250143.json",
+			"happy/4/objects/rpminfo_object/oval:com.aliyun:obj:20250143001.json",
+			"happy/4/states/rpminfo_state/oval:com.aliyun:ste:20250143001.json",
+			"happy/4/tests/rpminfo_test/oval:com.aliyun:tst:20250143001.json",
+			"happy/4/tests/textfilecontent54_test/oval:com.aliyun:tst:1.json"
+		]
+	}
+}

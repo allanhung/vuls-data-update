@@ -1,0 +1,13 @@
+{
+	"xmlns": "http://oval.mitre.org/XMLSchema/oval-definitions-5#linux",
+	"check": "all",
+	"comment": "broken is earlier than 0:linux-headers",
+	"version": "1",
+	"id": "oval:com.aliyun:tst:20260999001",
+	"object": {
+		"object_ref": "oval:com.aliyun:obj:20260999001"
+	},
+	"state": {
+		"state_ref": "oval:com.aliyun:ste:20260999001"
+	}
+}

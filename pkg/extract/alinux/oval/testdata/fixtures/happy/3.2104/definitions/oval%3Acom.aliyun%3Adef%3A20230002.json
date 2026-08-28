@@ -1,0 +1,66 @@
+{
+	"id": "oval:com.aliyun:def:20230002",
+	"version": "1",
+	"class": "patch",
+	"metadata": {
+		"title": "HOTFIX-SA-2023:0002: kernel-hotfix security update (Important)",
+		"affected": {
+			"family": "unix",
+			"platform": "Alibaba Cloud Linux 3"
+		},
+		"reference": [
+			{
+				"ref_id": "HOTFIX-SA-2023:0002",
+				"ref_url": "https://alas.aliyun-inc.com/errata/detail/HOTFIX-SA-2023:0002",
+				"source": "HOTFIX-SA"
+			}
+		],
+		"description": "Package updates are available for Alibaba Cloud Linux 3 that fix the following vulnerabilities:\n\nCVE-2023-0179:\nA buffer overflow vulnerability was found in the Netfilter subsystem in the Linux Kernel.",
+		"advisory": {
+			"from": "alas.aliyun-inc.com",
+			"severity": "Important",
+			"rights": "Copyright 2026 Alibaba Cloud Linux",
+			"issued": {
+				"date": "2023-01-16"
+			},
+			"updated": {
+				"date": "2024-07-16"
+			},
+			"cve": [
+				{
+					"text": "CVE-2023-0179",
+					"cvss3": "7.8/CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+					"impact": "Important",
+					"cwe": "CWE-190",
+					"href": "https://alas.aliyun-inc.com/cves/detail/CVE-2023-0179",
+					"public": "20230118"
+				}
+			],
+			"affected_cpe_list": {
+				"cpe": [
+					"cpe:2.3:o:alibabacloud:alibaba_cloud_linux_3:-:*:*:*:*:*:*:*"
+				]
+			}
+		}
+	},
+	"criteria": {
+		"operator": "AND",
+		"criterias": [
+			{
+				"operator": "OR",
+				"criterions": [
+					{
+						"test_ref": "oval:com.aliyun:tst:20230002001",
+						"comment": "kernel-hotfix-11169823-11.1.al8 is earlier than 0:hotfix-11169823-11.1.al8-1.0-20221221203219.al8"
+					}
+				]
+			}
+		],
+		"criterions": [
+			{
+				"test_ref": "oval:com.aliyun:tst:1",
+				"comment": "Alibaba Cloud Linux 3.2104 is installed"
+			}
+		]
+	}
+}

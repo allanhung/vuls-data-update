@@ -1,0 +1,6 @@
+{
+	"xmlns": "http://oval.mitre.org/XMLSchema/oval-definitions-5#linux",
+	"id": "oval:com.aliyun:obj:20230002001",
+	"version": "1",
+	"name": "kernel-hotfix-11169823-11.1.al8"
+}

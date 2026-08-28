@@ -8,6 +8,7 @@ import (
 	"github.com/pkg/errors"
 	"github.com/spf13/cobra"
 
+	alinuxOVAL "github.com/MaineK00n/vuls-data-update/pkg/extract/alinux/oval"
 	almaErrata "github.com/MaineK00n/vuls-data-update/pkg/extract/alma/errata"
 	almaOSV "github.com/MaineK00n/vuls-data-update/pkg/extract/alma/osv"
 	almaOVAL "github.com/MaineK00n/vuls-data-update/pkg/extract/alma/oval"
@@ -152,6 +153,7 @@ func NewCmdExtract() *cobra.Command {
 	}
 
 	cmd.AddCommand(
+		newCmdAlinuxOVAL(),
 		newCmdAlmaErrata(), newCmdAlmaOSV(), newCmdAlmaOVAL(),
 		newCmdAlpineSecDB(), newCmdAlpineOSV(),
 		newCmdAmazon(),
@@ -2374,6 +2376,31 @@ func newCmdOpenSSHSecurity() *cobra.Command {
 		RunE: func(_ *cobra.Command, args []string) error {
 			if err := opensshSecurity.Extract(args[0], opensshSecurity.WithDir(options.dir)); err != nil {
 				return errors.Wrap(err, "failed to extract openssh security")
+			}
+			return nil
+		},
+	}
+
+	cmd.Flags().StringVarP(&options.dir, "dir", "d", options.dir, "output extract results to specified directory")
+
+	return cmd
+}
+
+func newCmdAlinuxOVAL() *cobra.Command {
+	options := &base{
+		dir: filepath.Join(util.CacheDir(), "extract", "alinux", "oval"),
+	}
+
+	cmd := &cobra.Command{
+		Use:   "alinux-oval <Raw Alibaba Cloud Linux OVAL Repository PATH>",
+		Short: "Extract Alibaba Cloud Linux OVAL data source",
+		Example: heredoc.Doc(`
+			$ vuls-data-update extract alinux-oval vuls-data-raw-alinux-oval
+		`),
+		Args: cobra.ExactArgs(1),
+		RunE: func(_ *cobra.Command, args []string) error {
+			if err := alinuxOVAL.Extract(args[0], alinuxOVAL.WithDir(options.dir)); err != nil {
+				return errors.Wrap(err, "failed to extract alinux oval")
 			}
 			return nil
 		},

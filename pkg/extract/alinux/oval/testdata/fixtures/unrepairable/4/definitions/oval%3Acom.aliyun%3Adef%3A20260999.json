@@ -1,0 +1,66 @@
+{
+	"id": "oval:com.aliyun:def:20260999",
+	"version": "1",
+	"class": "patch",
+	"metadata": {
+		"title": "ALINUX4-SA-2026:0999: broken package security update (Important)",
+		"affected": {
+			"family": "unix",
+			"platform": "Alibaba Cloud Linux 4"
+		},
+		"reference": [
+			{
+				"ref_id": "ALINUX4-SA-2026:0999",
+				"ref_url": "https://alas.aliyun-inc.com/errata/detail/ALINUX4-SA-2026:0999",
+				"source": "ALINUX4-SA"
+			}
+		],
+		"description": "A definition whose only rpminfo test carries an EVR body with no version-release separator (zero dashes), which the dash-count repair cannot resolve.",
+		"advisory": {
+			"from": "alas.aliyun-inc.com",
+			"severity": "Important",
+			"rights": "Copyright 2026 Alibaba Cloud Linux",
+			"issued": {
+				"date": "2026-06-01"
+			},
+			"updated": {
+				"date": "2026-06-01"
+			},
+			"cve": [
+				{
+					"text": "CVE-2026-09999",
+					"cvss3": "7.8/CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+					"impact": "Important",
+					"cwe": "CWE-000",
+					"href": "https://alas.aliyun-inc.com/cves/detail/CVE-2026-09999",
+					"public": "20260601"
+				}
+			],
+			"affected_cpe_list": {
+				"cpe": [
+					"cpe:2.3:o:alibabacloud:alibaba_cloud_linux_4:-:*:*:*:*:*:*:*"
+				]
+			}
+		}
+	},
+	"criteria": {
+		"operator": "AND",
+		"criterias": [
+			{
+				"operator": "OR",
+				"criterions": [
+					{
+						"test_ref": "oval:com.aliyun:tst:20260999001",
+						"comment": "broken is earlier than 0:headers"
+					}
+				]
+			}
+		],
+		"criterions": [
+			{
+				"test_ref": "oval:com.aliyun:tst:1",
+				"comment": "Alibaba Cloud Linux 4 is installed"
+			}
+		]
+	}
+}

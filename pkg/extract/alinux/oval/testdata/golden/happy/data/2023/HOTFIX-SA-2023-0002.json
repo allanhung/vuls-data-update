@@ -1,0 +1,115 @@
+{
+	"id": "HOTFIX-SA-2023:0002",
+	"advisories": [
+		{
+			"content": {
+				"id": "HOTFIX-SA-2023:0002",
+				"title": "HOTFIX-SA-2023:0002: kernel-hotfix security update (Important)",
+				"description": "Package updates are available for Alibaba Cloud Linux 3 that fix the following vulnerabilities:\n\nCVE-2023-0179:\nA buffer overflow vulnerability was found in the Netfilter subsystem in the Linux Kernel.",
+				"severity": [
+					{
+						"type": "vendor",
+						"source": "alas.aliyun.com",
+						"vendor": "Important"
+					}
+				],
+				"references": [
+					{
+						"source": "alas.aliyun.com",
+						"url": "https://alas.aliyun.com/errata/detail/HOTFIX-SA-2023:0002"
+					}
+				],
+				"published": "2023-01-16T00:00:00Z"
+			},
+			"segments": [
+				{
+					"ecosystem": "alinux:3"
+				}
+			]
+		}
+	],
+	"vulnerabilities": [
+		{
+			"content": {
+				"id": "CVE-2023-0179",
+				"severity": [
+					{
+						"type": "cvss_v31",
+						"source": "alas.aliyun.com",
+						"cvss_v31": {
+							"vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+							"base_score": 7.8,
+							"base_severity": "HIGH",
+							"temporal_score": 7.8,
+							"temporal_severity": "HIGH",
+							"environmental_score": 7.8,
+							"environmental_severity": "HIGH"
+						}
+					}
+				],
+				"references": [
+					{
+						"source": "alas.aliyun.com",
+						"url": "https://alas.aliyun.com/cves/detail/CVE-2023-0179"
+					}
+				],
+				"published": "2023-01-18T00:00:00Z"
+			},
+			"segments": [
+				{
+					"ecosystem": "alinux:3"
+				}
+			]
+		}
+	],
+	"detections": [
+		{
+			"ecosystem": "alinux:3",
+			"conditions": [
+				{
+					"criteria": {
+						"operator": "OR",
+						"criterions": [
+							{
+								"type": "version",
+								"version": {
+									"vulnerable": true,
+									"fix_status": {
+										"class": "fixed"
+									},
+									"package": {
+										"type": "binary",
+										"binary": {
+											"name": "kernel-hotfix-11169823-11.1.al8"
+										}
+									},
+									"affected": {
+										"type": "rpm",
+										"range": [
+											{
+												"lt": "0:1.0-20221221203219.al8"
+											}
+										],
+										"fixed": [
+											"0:1.0-20221221203219.al8"
+										]
+									}
+								}
+							}
+						]
+					}
+				}
+			]
+		}
+	],
+	"data_source": {
+		"id": "alinux-oval",
+		"raws": [
+			"happy/3.2104/definitions/oval:com.aliyun:def:20230002.json",
+			"happy/3.2104/objects/rpminfo_object/oval:com.aliyun:obj:20230002001.json",
+			"happy/3.2104/states/rpminfo_state/oval:com.aliyun:ste:20230002001.json",
+			"happy/3.2104/tests/rpminfo_test/oval:com.aliyun:tst:20230002001.json",
+			"happy/3.2104/tests/textfilecontent54_test/oval:com.aliyun:tst:1.json"
+		]
+	}
+}
